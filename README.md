@@ -49,7 +49,7 @@ go
 
 ## Shrink Log file
 
-Generate 14M Lotto pattern data is a single transaction so that the log file will be increased more than the size of real data. In this case, the Log file (.ldf) grows to 2.8 GB, although the size of DB (.mdf) is about 270 MB before `UNIQUE index` was created. Following code will shrink the .ldf size to release the disk space.
+Generating 14M Lotto pattern data in a SQL statement is a single and large transaction so that the log file will be increased more than the size of real data. In this case, the Log file (.ldf) grows to 2.8 GB, although the size of DB (.mdf) is about 270 MB before `UNIQUE index` was created. However, the exploded Log data can not be automatically shrunk for keeping transactional operations. Since the current Log data is surely useless, following code will be applied to shrink the .ldf size to release the disk space.
 
 ```sql
 -- Truncate the log by changing the database recovery model to SIMPLE.  
@@ -66,6 +66,9 @@ GO
 ```
 
 ## Stored Procedure for Random Lottos
+
+* `xp_RandomBtw 1, 49, 6, @str out`: Generate 6 different random numbers between 1 and 49, and output as a string containing sorted numbers like '1, 2, 3, 4, 5, 6'.
+* [xp_RandomBtw_mssql](https://github.com/gitshl/xp_RandomBtw_mssql) shows the design and issues.
 
 ```sql
 -- Generate @round random numbers between @n1 and @n2
